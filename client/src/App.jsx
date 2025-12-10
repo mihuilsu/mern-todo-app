@@ -41,6 +41,8 @@ function App() {
         t.id === id ? { ...t, completed: response.data.completed } : t
       )
     );
+
+    console.log(todo);
   };
 
   return (
