@@ -7,15 +7,15 @@ const API_URL = "http://localhost:5005/todos";
 function App() {
   const [todos, setTodos] = useState([])
   const [text, setText] = useState("")
+
   useEffect(() => {
-    fetchTodos();
+    async function load() {
+      const response = await axios.get(API_URL);
+      setTodos(response.data);
+    }
+    load();
   }, []);
-
-  const fetchTodos = async () => {
-    const response = await axios.get(API_URL);
-    setTodos(response.data)
-  }
-
+  
   const addTodo = async () => {
     if (text.trim()) {
       const response = await axios.post(API_URL, { text })
