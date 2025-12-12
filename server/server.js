@@ -93,6 +93,34 @@ app.delete("/todos/:id", (req, res) => {
 });
 */
 
+app.put("/todos/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { completed } = req.body;
+
+    const updatedTodo = await Todo.findByIdAndUpdate(
+      id,
+      
+      {
+        completed
+      },
+
+      { new: true }
+    );
+
+    if (!updatedTodo) {
+      res.status(404).json({ message: "Todo not found!" });
+    }
+
+    res.json(updatedTodo);
+  } catch (error) {
+    res.status(500).json({ error: "Unable to update todos!" });
+  }
+
+
+});
+
+/*
 app.put("/todos/:id", (req, res) => {
   const todo = todos.find((t) => t.id == req.params.id);
   if (todo) {
@@ -103,6 +131,7 @@ app.put("/todos/:id", (req, res) => {
     res.status(404).json({ message: "todo not found" });
   }
 })
+*/
 
 app.listen(PORT, () => {
   console.log(`server working on port ${PORT}`);
